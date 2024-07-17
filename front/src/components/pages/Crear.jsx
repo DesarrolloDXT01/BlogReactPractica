@@ -1,17 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useForm from '../../hooks/useForm'
+import Peticion from '../../helpers/Peticion'
+import Global from '../../helpers/Global'
+
 
 export const Crear = () => {
   const {formulario, enviado, cambiado}= useForm();
+  const [resultado, setResultado] = useState("");
 
-  const guardaArticulo = (e) =>{
+  const guardarArticulo = async(e) =>{
     e.preventDefault();
-    let nuevoArticulo = JSON.stringify(formulario)
+    let nuevoArticulo = formulario;
+
+    const {datos, cargando} = await Peticion(Global.url + "crear", "POST", nuevoArticulo);
+    if (datos.status === "succs") {
+      setResultado("Guardado");
+    }else{
+      setResultado("Error")
+    }
   }
 
   return (
     <div className='jumbo'>Crear
       <h1>Crear articulo</h1>
+      <strong>{resultado == "Guardado" ? "Articulo guardado" : "Error"}</strong>
       <form className='formulario' onSubmit={enviado}>
 
         <div className='form-group'>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 
-const useForm = () => {
+const useForm = (objetoInicial = {}) => {
 
     const [formulario, setFormulario] = useState(objetoInicial);
     const serializarFormulario = (formulario) => {
