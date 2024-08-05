@@ -26,11 +26,11 @@ const useForm = (objetoInicial = {}) => {
             [name]: value
         })
     }
-    return (
+    return {
         formulario,
         enviado,
         cambiado
-    )
+    }
 }
 
 export default useForm
