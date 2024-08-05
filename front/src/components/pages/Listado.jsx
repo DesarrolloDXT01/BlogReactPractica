@@ -1,11 +1,13 @@
 import React from 'react'
+import { Global } from '../../helpers/Global'
 
 const Listado = ({articulos, setArticulos}) => {
   return (
     articulos.map((articulo) => (
         <article key={articulo._id} className="articulo-item">
           <div className="mascara">
-            <img src="https://picsum.photos/1000" />
+            {articulo.imagen != 'default.png' && <img src={Global.url + "imagen/" + articulo.imagen} />}
+            {articulo.imagen == 'default.png'&& <img src="https://picsum.photos/1000" />}
           </div>
           <div className="datos">
             <h3 className="title">{articulo.titulo}</h3>

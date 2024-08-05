@@ -1,36 +1,46 @@
 
-export const Peticion = async(url, metodo, datosGuardar="")=>{
+export const Peticion = async (url, metodo, datosGuardar = "", archivos = false) => {
     let cargando = true;
 
-        cargando = true;
-        let opciones={
-            method:"GET"
-        };
+    cargando = true;
+    let opciones = {
+        method: "GET"
+    };
 
-        if(metodo=="GET" || metodo =="DELETE"){
+    if (metodo === "GET" || metodo === "DELETE") {
+        opciones = {
+            method: metodo
+        }
+    }
+
+    if (metodo === "POST" || metodo === "PUT") {
+
+        if (archivos){
             opciones = {
-                method: metodo
-                }
-            }
-        
-        if(metodo=="POST" || metodo =="PUT"){
+                method: metodo,
+                body:datosGuardar
+                };
+        }else{
             opciones = {
                 method: metodo,
                 body: JSON.stringify(datosGuardar),
                 headers: {
-                    "content-Type":"application/json"
+                    "content-Type": "application/json"
                 }
-            }
+            };
         }
-
-
-
-        const peticion = await fetch(url);
-       const datos = await peticion.json();
-       cargando = false;
        
+    }
+
+
+
+    const peticion = await fetch(url, opciones);
+    const datos = await peticion.json();
+    cargando = false;
+
     return {
         datos,
         cargando
     }
 }
+export default Peticion
